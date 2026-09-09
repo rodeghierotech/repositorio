@@ -60,7 +60,7 @@ longDescription: `Aplicação web criada para o Bom Pra Cachorro Pet Shop, com f
     image: 'https://images.unsplash.com/photo-1516453734593-8d198ae84bcf?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     github: 'https://github.com/rodeghierotech/catalogo-bpc',
     deploy: 'https://catalogo-bpc.vercel.app/',
-    featured: true,
+    featured: false,
     status: 'active',
     stars: 2,
     views: 60,
@@ -325,6 +325,27 @@ O formulário de contato usa a API do Formspree para enviar emails sem backend. 
     stars: 3,
     views: 410,
     createdAt: '2026-02-05',
+  },
+  {
+    id: 'automatech',
+    name: 'Automatech - Automação de Planilhas',
+    description: 'Aplicativo desktop em Python para automatizar tarefas com planilhas e arquivos. Interface moderna, processamento local e executável para Windows.',
+
+longDescription: `O Automatech é um aplicativo desktop criado para simplificar tarefas repetitivas de escritório sem exigir conhecimentos de programação. Ele permite unir, separar e limpar planilhas, além de organizar arquivos automaticamente por categoria.
+
+A interface foi desenvolvida com CustomTkinter, enquanto o processamento de dados utiliza pandas e openpyxl. Antes de executar uma automação, o usuário pode visualizar uma prévia dos dados e escolher as opções de processamento.
+
+O aplicativo também conta com histórico de execuções, rotinas salvas e processamento em segundo plano para manter a interface responsiva. Todos os arquivos são processados localmente, preservando os documentos originais e evitando o envio de dados para serviços externos.
+
+A distribuição para Windows é feita com PyInstaller, gerando um executável que pode ser usado sem precisar configurar manualmente o ambiente Python.`,
+    techs: ['Python'],
+    image: '/img/logo-automatech.png',
+    github: 'https://github.com/rodeghierotech/automatech',
+    deploy: null,
+    featured: true,
+    status: 'active',
+    stars: 1,
+    views: 520,
+    createdAt: '2026-09-09',
   }
 ]
-
