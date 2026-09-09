@@ -21,7 +21,7 @@ export const developer = {
     { name: 'Espanhol', level: 2 },
   ],
   stats: {
-    projects: 7,
+    projects: 20,
     commits: 200,
     stars: 18,
     years: 2,
