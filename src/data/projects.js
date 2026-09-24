@@ -65,6 +65,22 @@ longDescription: `Press Start é uma aplicação fullstack desenvolvida com Reac
     views: 39,
     createdAt: '2026-09-11',
   },
+   {
+    id: 'linkshort',
+    name: 'Encurtador de links com métricas',
+  description: 'Plataforma fullstack para encurtamento e gerenciamento de links com autenticação, analytics de acessos, QR Code, API pública e recursos de segurança.',
+
+longDescription: `LinkShort é uma aplicação fullstack desenvolvida com Python, FastAPI, SQLAlchemy, Jinja2 e SQLite, com suporte a Redis para cache e rate limiting. A plataforma permite criar e gerenciar links encurtados, utilizar aliases personalizados, acompanhar métricas de acessos por período, dispositivo, navegador, sistema operacional e origem, além de gerar QR Codes. A aplicação conta com autenticação, API Keys, API pública versionada, webhooks assinados com HMAC, expiração de links, busca, filtros, paginação e mecanismos de segurança contra abusos e acessos indevidos.`,
+    techs: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Prisma', 'Gemini API'],
+    image: '/img/logo-linkshort.png',
+    github: 'https://github.com/rodeghierotech/linkshort',
+    deploy: 'https://linkshort-blue.vercel.app',
+    featured: false,
+    status: 'active',
+    stars: 0,
+    views: 77,
+    createdAt: '2026-09-24',
+  },
   {
     id: 'catalogo-bpc',
     name: 'Catálogo de Produtos Bom Pra Cachorro',
