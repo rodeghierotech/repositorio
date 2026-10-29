@@ -7,7 +7,7 @@ export const developer = {
   phone: '(53) 99156-6695',
   github: 'https://github.com/rodeghierotech',
   linkedin: 'https://linkedin.com/in/henriquerodeghiero',
-  instagram: 'https://instagram.com/rodeghierotech',
+  instagram: 'https://www.instagram.com/rodeghierotech/',
   avatar: 'https://api.dicebear.com/9.x/initials/svg?seed=HR&backgroundColor=c8f135&textColor=0a0a0b&fontSize=38',
   stack: ['Python', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'MySQL', 'Git', 'React'],
   education: [
@@ -26,6 +26,13 @@ export const developer = {
     stars: 18,
     years: 2,
   },
+}
+
+export const whatsappMessage = 'Olá, Henrique! Vi o site da RodeghieroTech e gostaria de conversar sobre um sistema para organizar a minha rotina.'
+export const whatsappUrl = `https://wa.me/55${developer.phone.replace(/\D/g, '')}?text=${encodeURIComponent(whatsappMessage)}`
+export const buildDiagnosticWhatsappUrl = ({ routine, bottleneck, currentTool }) => {
+  const message = `Olá, Henrique! Quero avaliar um sistema sob medida para a minha operação.\n\nRotina que quero organizar: ${routine}\nPrincipal gargalo: ${bottleneck}\nHoje controlo isso com: ${currentTool}`
+  return `https://wa.me/55${developer.phone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
 }
 
 export const allTechs = [
@@ -68,10 +75,10 @@ longDescription: `Press Start é uma aplicação fullstack desenvolvida com Reac
    {
     id: 'linkshort',
     name: 'Encurtador de links com métricas',
-  description: 'Plataforma fullstack para encurtamento e gerenciamento de links com autenticação, analytics de acessos, QR Code, API pública e recursos de segurança.',
+  description: 'Ferramenta para criar links curtos, gerar QR Codes e acompanhar acessos por período, origem e dispositivo.',
 
 longDescription: `LinkShort é uma aplicação fullstack desenvolvida com Python, FastAPI, SQLAlchemy, Jinja2 e SQLite, com suporte a Redis para cache e rate limiting. A plataforma permite criar e gerenciar links encurtados, utilizar aliases personalizados, acompanhar métricas de acessos por período, dispositivo, navegador, sistema operacional e origem, além de gerar QR Codes. A aplicação conta com autenticação, API Keys, API pública versionada, webhooks assinados com HMAC, expiração de links, busca, filtros, paginação e mecanismos de segurança contra abusos e acessos indevidos.`,
-    techs: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Prisma', 'Gemini API'],
+    techs: ['Python', 'FastAPI', 'SQLAlchemy', 'SQLite', 'Redis'],
     image: '/img/logo-linkshort.png',
     github: 'https://github.com/rodeghierotech/linkshort',
     deploy: 'https://linkshort-blue.vercel.app',
@@ -100,7 +107,13 @@ longDescription: `Aplicação web criada para o Bom Pra Cachorro Pet Shop, com f
    {
     id: 'pdv-adega-demo',
     name: 'PDV - Santa Adega Demo',
-    description: 'Sistema de gestão para adega/PDV desenvolvido com Next.js, TypeScript e SQLite. Possui controle de vendas, comandas, produtos e leitura de código de barras. Interface moderna e focada em uso rápido no balcão.',
+    description: 'Demonstração de ponto de venda para adega, com cadastro de produtos, comandas e vendas, leitura de código de barras e cálculo de troco.',
+    portfolio: 'showcase',
+    caseStudy: {
+      problem: 'Organizar o atendimento de balcão quando produtos, comandas e pagamentos precisam ser conferidos rapidamente.',
+      solution: 'Um ponto de venda que centraliza cadastro, comandas, vendas, descontos e cálculo de troco em uma única rotina.',
+      highlights: ['Leitura de código de barras', 'Comandas e vendas', 'Cálculo de troco'],
+    },
     longDescription: `Sistema completo de ponto de venda (PDV) para adega, desenvolvido com foco em performance, usabilidade e aplicação em cenário real. O projeto utiliza Next.js 15 com App Router, TypeScript, TailwindCSS e shadcn/ui para uma interface moderna e responsiva.
 
 O sistema permite gerenciar produtos, comandas e vendas de forma prática, incluindo funcionalidades como leitura de código de barras, aplicação de descontos, cálculo automático de troco e múltiplas formas de pagamento.
@@ -108,7 +121,7 @@ O sistema permite gerenciar produtos, comandas e vendas de forma prática, inclu
 No backend, utiliza SQLite com Drizzle ORM para persistência de dados, além de validação com Zod e gerenciamento de estado com React Query. A autenticação é feita com Better Auth, garantindo proteção de rotas e segurança básica para o ambiente administrativo.
 
 O objetivo do projeto foi simular um sistema real de uso em balcão, priorizando velocidade no atendimento e organização das vendas. A estrutura foi pensada para facilitar futuras expansões, como controle de estoque, relatórios financeiros e gestão de usuários.`,
-    techs: ['CSS', 'TypeScript', 'Git'],
+    techs: ['Next.js', 'TypeScript', 'SQLite', 'Drizzle ORM', 'Better Auth'],
     image: 'https://images.unsplash.com/photo-1647427017067-8f33ccbae493?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     github: 'https://github.com/rodeghierotech/sistema-adega-demo',
     deploy: 'https://sistema-adega-demo.vercel.app/',
@@ -145,7 +158,13 @@ Os dados são armazenados em PostgreSQL utilizando Prisma como ORM, com migratio
   {
     id: 'tv-ads',
     name: 'Gerenciador de Anúncios em TVs',
-    description: 'Sistema web para gerenciamento de anúncios em TVs e monitores, desenvolvido com Next.js, TypeScript, Drizzle ORM e PostgreSQL, com painel administrativo, cadastro de TVs, upload de mídias, criação de playlists, pareamento de dispositivos e player fullscreen.',
+    description: 'Painel para organizar mídias e playlists, cadastrar telas e conectar cada dispositivo ao conteúdo que deve exibir.',
+    portfolio: 'showcase',
+    caseStudy: {
+      problem: 'Evitar a gestão manual de conteúdos quando várias telas precisam exibir a mídia certa.',
+      solution: 'Um painel central para cadastrar telas, organizar playlists e acompanhar o pareamento de cada dispositivo.',
+      highlights: ['Playlists de mídia', 'Pareamento de telas', 'Player em tela cheia'],
+    },
 
 longDescription: `Projeto desenvolvido para gerenciamento de conteúdos publicitários exibidos em TVs e monitores, com foco em organizar mídias, playlists e dispositivos conectados por meio de um painel administrativo.
 
@@ -158,7 +177,7 @@ No painel, é possível enviar imagens e vídeos, cadastrar conteúdos, criar pl
 A página /player funciona em tela cheia para exibição dos anúncios. No primeiro acesso, o dispositivo gera um código de pareamento, que pode ser conectado pelo painel. Após pareado, o player busca a playlist vinculada, alterna imagens por tempo definido, reproduz vídeos automaticamente e sincroniza atualizações por polling.
 
 Os dados são armazenados em PostgreSQL utilizando Drizzle ORM, com tabelas para usuários, sessões, mídias, playlists, itens de playlist e TVs. O projeto utiliza Next.js App Router, Server Actions, rotas de API para player, validações com Zod, Tailwind CSS para interface e estrutura preparada para evolução com storage externo, cache offline e sincronização em tempo real.`,
-    techs: ['Typescript', 'Git', 'Prisma', 'BetterAuth', 'PostgreSQL'],
+    techs: ['Next.js', 'TypeScript', 'Drizzle ORM', 'PostgreSQL', 'Better Auth'],
     image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     github: 'https://github.com/rodeghierotech/tv-ads',
     deploy: 'http://tv-ads-one.vercel.app',
@@ -361,6 +380,12 @@ O formulário de contato usa a API do Formspree para enviar emails sem backend. 
     id: 'automatech',
     name: 'Automatech - Automação de Planilhas',
     description: 'Aplicativo desktop em Python para automatizar tarefas com planilhas e arquivos. Interface moderna, processamento local e executável para Windows.',
+    portfolio: 'showcase',
+    caseStudy: {
+      problem: 'Reduzir tarefas repetitivas de planilhas e organização de arquivos feitas manualmente no escritório.',
+      solution: 'Um aplicativo local que prepara planilhas e organiza arquivos sem exigir conhecimento de programação.',
+      highlights: ['Processamento local', 'Prévia antes de executar', 'Rotinas salvas'],
+    },
 
 longDescription: `O Automatech é um aplicativo desktop criado para simplificar tarefas repetitivas de escritório sem exigir conhecimentos de programação. Ele permite unir, separar e limpar planilhas, além de organizar arquivos automaticamente por categoria.
 

@@ -38,7 +38,7 @@ export default function SearchFilter({ query, setQuery, activeTechs, setActiveTe
       </div>
 
       {/* Tech filters */}
-      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+      <div className="tech-filter-row">
         {allTechs.map(tech => (
           <button
             key={tech}

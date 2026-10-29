@@ -1,164 +1,52 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
-import { ArrowLeft, Github, ExternalLink, Eye, Star, Heart, Calendar, ArrowRight } from 'lucide-react'
+import { useEffect } from 'react'
+import { ArrowLeft, ArrowRight, ExternalLink, Github, Heart } from 'lucide-react'
 import { projects } from '../data/projects'
 import { useApp } from '../context/AppContext'
 import ProjectCard from '../components/ProjectCard'
+import Seo from '../components/Seo'
 
 export default function ProjectDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { toggleFavorite, isFavorite, incrementView, getViews } = useApp()
-  const viewedProject = useRef(null)
-
-  const project = projects.find(p => p.id === id)
-  const related = projects.filter(p => p.id !== id && p.techs.some(t => project?.techs.includes(t))).slice(0, 3)
+  const { toggleFavorite, isFavorite } = useApp()
+  const project = projects.find(item => item.id === id)
+  const related = projects.filter(item => item.id !== id && item.techs.some(tech => project?.techs.includes(tech))).slice(0, 3)
 
   useEffect(() => {
     if (!project) return navigate('/projects')
-    if (viewedProject.current !== project.id) {
-      incrementView(project.id)
-      viewedProject.current = project.id
-    }
     window.scrollTo(0, 0)
-  }, [id, project, navigate, incrementView])
+  }, [id, project, navigate])
 
   if (!project) return null
 
-  const fav = isFavorite(project.id)
+  const favorite = isFavorite(project.id)
+  const isShowcase = project.portfolio === 'showcase' && project.caseStudy
 
   return (
-    <main className="min-h-screen pt-24 pb-16 sm:pb-24 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Back */}
-        <Link to="/projects" className="inline-flex items-center gap-2 text-text-secondary hover:text-text-primary text-sm mb-8 transition-colors font-mono group">
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-          projetos
-        </Link>
-
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              {project.featured && (
-                <span className="px-2 py-0.5 rounded-full bg-accent-lime/10 border border-accent-lime/20 text-accent-lime text-[10px] font-mono">
-                  featured
-                </span>
-              )}
-              {project.status === 'archived' && (
-                <span className="px-2 py-0.5 rounded-full bg-text-muted/20 border border-text-muted/20 text-text-secondary text-[10px] font-mono">
-                  archived
-                </span>
-              )}
-            </div>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-text-primary break-words">
-              {project.name}
-            </h1>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <button
-              onClick={() => toggleFavorite(project.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm transition-all ${
-                fav
-                  ? 'bg-red-500/10 border-red-500/20 text-red-400'
-                  : 'border-bg-border text-text-secondary hover:border-text-muted hover:text-text-primary'
-              }`}
-            >
-              <Heart size={13} fill={fav ? 'currentColor' : 'none'} />
-              {fav ? 'Salvo' : 'Salvar'}
-            </button>
-          </div>
+    <main className="studio-page project-detail-page">
+      <Seo title={project.name} description={project.description} />
+      <div className="wrap project-detail-wrap">
+        <Link to="/projects" className="back-link"><ArrowLeft size={15} /> Todos os projetos</Link>
+        <header className="detail-heading">
+          <div><p className="detail-kind">Projeto</p><h1>{project.name}</h1></div>
+          <button onClick={() => toggleFavorite(project.id)} className={`project-favorite ${favorite ? 'selected' : ''}`} aria-label={favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'} title={favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}><Heart size={17} fill={favorite ? 'currentColor' : 'none'} /></button>
+        </header>
+        <p className="detail-summary">{project.description}</p>
+        {isShowcase ? <>
+          <section className="case-study" aria-label="Resumo da solução">
+            <div><p>O desafio</p><h2>{project.caseStudy.problem}</h2></div>
+            <div><p>Como a solução organiza</p><h2>{project.caseStudy.solution}</h2></div>
+            <div><p>O que entrega</p><ul>{project.caseStudy.highlights.map(item => <li key={item}>{item}</li>)}</ul></div>
+          </section>
+          {project.longDescription && <details className="technical-details"><summary>Ver detalhes técnicos do projeto</summary><div className="detail-description">{project.longDescription.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div></details>}
+        </> : project.longDescription && <div className="detail-description">{project.longDescription.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>}
+        <div className="detail-technologies"><h2>Tecnologias usadas</h2><div className="project-tags">{project.techs.map(tech => <Link key={tech} to={`/projects?tech=${encodeURIComponent(tech)}`}>{tech}</Link>)}</div></div>
+        <div className="detail-actions">
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="button button-dark"><Github size={16} /> Ver código no GitHub <ExternalLink size={13} /></a>
+          {project.deploy && <a href={project.deploy} target="_blank" rel="noopener noreferrer" className="button button-green">Abrir projeto <ExternalLink size={13} /></a>}
         </div>
-
-        {/* Meta */}
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-8 text-text-secondary">
-          <span className="flex items-center gap-1.5 number-counter">
-            <Star size={12} /> {project.stars} stars
-          </span>
-          <span className="flex items-center gap-1.5 number-counter">
-            <Eye size={12} /> {getViews(project.id, project.views)} views
-          </span>
-          <span className="flex items-center gap-1.5 number-counter">
-            <Calendar size={12} /> {new Date(project.createdAt).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })}
-          </span>
-        </div>
-
-        {/* Image */}
-        <div className="rounded-xl overflow-hidden mb-8 border border-bg-border">
-          <img src={project.image} alt={project.name} className="w-full aspect-video object-cover" />
-        </div>
-
-        {/* Description */}
-        <div className="prose-custom mb-8">
-          <p className="text-text-secondary text-base leading-relaxed font-body mb-4">
-            {project.description}
-          </p>
-          {project.longDescription && (
-            <div className="card-glass rounded-xl p-4 sm:p-6 mt-4">
-              {project.longDescription.split('\n\n').map((para, i) => (
-                <p key={i} className={`text-text-secondary text-sm leading-relaxed font-body ${i > 0 ? 'mt-4' : ''}`}>
-                  {para}
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Techs */}
-        <div className="mb-8">
-          <p className="text-text-secondary text-xs font-mono uppercase tracking-widest mb-3">tecnologias</p>
-          <div className="flex flex-wrap gap-2">
-            {project.techs.map(tech => (
-              <Link
-                key={tech}
-                to={`/projects?tech=${tech}`}
-                className="tag-tech px-3 py-1.5 rounded-lg"
-              >
-                {tech}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Links */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-16">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-ghost flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm"
-          >
-            <Github size={15} />
-            Ver no GitHub
-          </a>
-          {project.deploy && (
-            <a
-              href={project.deploy}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm"
-            >
-              <ExternalLink size={14} />
-              Ver deploy
-            </a>
-          )}
-        </div>
-
-        {/* Related */}
-        {related.length > 0 && (
-          <div>
-            <div className="divider mb-10" />
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-              <h2 className="font-display font-semibold text-xl text-text-primary">Projetos Relacionados</h2>
-              <Link to="/projects" className="text-text-secondary text-xs font-mono hover:text-accent-lime transition-colors flex items-center gap-1">
-                ver todos <ArrowRight size=  {11} />
-              </Link>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {related.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
-            </div>
-          </div>
-        )}
+        {related.length > 0 && <section className="related-projects"><div className="related-heading"><h2>Projetos relacionados</h2><Link to="/projects">Ver todos <ArrowRight size={14} /></Link></div><div className="project-list">{related.map(item => <ProjectCard key={item.id} project={item} />)}</div></section>}
       </div>
     </main>
   )

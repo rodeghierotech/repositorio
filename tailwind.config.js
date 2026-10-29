@@ -4,26 +4,26 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Syne"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        display: ['"Manrope"', 'sans-serif'],
+        mono: ['"DM Sans"', 'sans-serif'],
         body: ['"DM Sans"', 'sans-serif'],
       },
       colors: {
         bg: {
-          primary: '#0a0a0b',
-          secondary: '#111114',
-          card: '#16161a',
-          border: '#1e1e24',
+          primary: '#121815',
+          secondary: '#18211c',
+          card: '#1d2721',
+          border: '#303b34',
         },
         accent: {
-          lime: '#c8f135',
-          cyan: '#00e5cc',
+          lime: '#21d96b',
+          cyan: '#76e69a',
           purple: '#9b5de5',
         },
         text: {
-          primary: '#f0f0f2',
-          secondary: '#7c7c8a',
-          muted: '#3a3a44',
+          primary: '#f1f2eb',
+          secondary: '#b3beb5',
+          muted: '#a0aaa1',
         },
       },
       animation: {

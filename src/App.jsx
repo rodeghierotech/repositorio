@@ -12,9 +12,7 @@ export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen">
-          <div className="site-background hero-sheen" />
-          <div className="grain-overlay" />
+        <div className="relative min-h-screen overflow-hidden">
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />

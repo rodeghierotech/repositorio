@@ -1,14 +1,15 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { projects } from '../data/projects'
-import ProjectCard from '../components/ProjectCard'
+import PortfolioGallery from '../components/PortfolioGallery'
 import SearchFilter from '../components/SearchFilter'
+import Seo from '../components/Seo'
 
 export default function Projects() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState('')
   const [activeTechs, setActiveTechs] = useState([])
-  const [sort, setSort] = useState('stars')
+  const [sort, setSort] = useState('recent')
   const queryParam = searchParams.get('q') || ''
   const techParamKey = searchParams.getAll('tech').join('|')
 
@@ -58,32 +59,29 @@ export default function Projects() {
       )
     }
 
-    result.sort((a, b) => {
-      if (sort === 'stars') return b.stars - a.stars
-      if (sort === 'views') return b.views - a.views
-      if (sort === 'recent') return new Date(b.createdAt) - new Date(a.createdAt)
-      return 0
-    })
+    result.sort((a, b) => sort === 'name'
+      ? a.name.localeCompare(b.name, 'pt-BR')
+      : new Date(b.createdAt) - new Date(a.createdAt))
 
     return result
   }, [query, activeTechs, sort])
+  const showcase = filtered.filter(project => project.portfolio === 'showcase')
+  const lab = filtered.filter(project => project.portfolio !== 'showcase')
 
   return (
     <main className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6">
+      <Seo title="Soluções e laboratório" description="Conheça sistemas para comércio e serviços e o laboratório de estudos da RodeghieroTech." />
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-10" style={{ opacity: 0, animation: 'fadeUp 0.5s ease forwards 0.1s' }}>
-          <p className="text-text-secondary text-xs font-mono uppercase tracking-widest mb-2">repositório</p>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-text-primary mb-3 break-words">
-            Todos os Projetos
-          </h1>
-          <p className="text-text-secondary text-sm font-body max-w-lg">
-            {projects.length} projetos públicos. Filtrar por tecnologia ou buscar pelo nome.
-          </p>
+        <div className="projects-banner mb-10">
+          <div>
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-text-primary mb-3 break-words">Projetos</h1>
+            <p className="text-text-secondary text-sm font-body max-w-lg">Soluções para comércio e serviços, além do laboratório de estudos e experimentos.</p>
+          </div>
         </div>
 
         {/* Filters */}
-        <div className="mb-8" style={{ opacity: 0, animation: 'fadeUp 0.5s ease forwards 0.2s' }}>
+        <div className="mb-8">
           <SearchFilter
             query={query}
             setQuery={handleQueryChange}
@@ -93,20 +91,17 @@ export default function Projects() {
         </div>
 
         {/* Sort + count */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6" style={{ opacity: 0, animation: 'fadeUp 0.5s ease forwards 0.25s' }}>
-          <span className="text-text-secondary text-xs font-mono">
-            {filtered.length} resultado{filtered.length !== 1 ? 's' : ''}
-          </span>
-          <div className="flex w-full sm:w-auto items-center gap-1 bg-bg-card border border-bg-border rounded-lg p-1 overflow-x-auto">
+        <div className="project-controls mb-6">
+          <span className="text-text-secondary text-xs">{filtered.length} projeto{filtered.length !== 1 ? 's' : ''}</span>
+          <div className="project-sort">
             {[
-              { value: 'stars', label: 'Stars' },
-              { value: 'views', label: 'Views' },
-              { value: 'recent', label: 'Recentes' },
+              { value: 'recent', label: 'Mais recentes' },
+              { value: 'name', label: 'Ordem alfabética' },
             ].map(s => (
               <button
                 key={s.value}
                 onClick={() => setSort(s.value)}
-                className={`flex-1 sm:flex-none px-3 py-1.5 rounded-md text-xs font-mono transition-all ${
+                className={`sort-option transition-all ${
                   sort === s.value
                     ? 'bg-accent-lime text-bg-primary font-medium'
                     : 'text-text-secondary hover:text-text-primary'
@@ -118,18 +113,23 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Grid */}
+        {/* Collections */}
         {filtered.length > 0 ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
+          <div className="project-collections">
+            {showcase.length > 0 && <section className="project-collection" aria-labelledby="showcase-title">
+              <div className="collection-heading"><div><p>Soluções para negócios</p><h2 id="showcase-title">Sistemas para a operação</h2></div><span>{showcase.length} caso{showcase.length !== 1 ? 's' : ''}</span></div>
+              <PortfolioGallery projects={showcase} />
+            </section>}
+            {lab.length > 0 && <section className="project-collection project-lab" aria-labelledby="lab-title">
+              <div className="collection-heading"><div><p>Laboratório</p><h2 id="lab-title">Estudos, produtos e experimentos</h2></div><span>{lab.length} projeto{lab.length !== 1 ? 's' : ''}</span></div>
+              <p className="collection-description">Projetos acadêmicos, interfaces e explorações técnicas que fazem parte do repertório de desenvolvimento.</p>
+              <PortfolioGallery projects={lab} />
+            </section>}
           </div>
         ) : (
           <div className="py-20 text-center">
-            <p className="text-text-muted text-4xl mb-4">∅</p>
-            <p className="text-text-secondary font-mono text-sm">Nenhum projeto encontrado.</p>
-            <p className="text-text-muted text-xs mt-2">Tente outros termos ou filtros.</p>
+            <p className="text-text-secondary text-sm">Nenhum projeto com esses filtros.</p>
+            <p className="text-text-muted text-xs mt-2">Tente outro termo ou remova uma tecnologia.</p>
           </div>
         )}
       </div>

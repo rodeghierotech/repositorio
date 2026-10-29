@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Code2, Heart, Menu, X } from 'lucide-react'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { ArrowUpRight, Heart, Menu, X } from 'lucide-react'
 import { useApp } from '../context/AppContext'
+import { LiquidNavbar, NimbusIcons } from './ui/liquid-glass-navbar'
+
+const navigationItems = [
+  { label: 'Início', to: '/', icon: NimbusIcons.home, fx: 'glow' },
+  { label: 'Projetos', to: '/projects', icon: NimbusIcons.globe, fx: 'spin' },
+  { label: 'Contato', to: '/contact', icon: NimbusIcons.user, fx: 'wave' },
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { favorites } = useApp()
   const location = useLocation()
+  const navigate = useNavigate()
+  const activeIndex = Math.max(0, navigationItems.findIndex(item => item.to === location.pathname))
 
   useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 20)
+    const handle = () => setScrolled(window.scrollY > 18)
     window.addEventListener('scroll', handle, { passive: true })
     return () => window.removeEventListener('scroll', handle)
   }, [])
@@ -18,77 +27,28 @@ export default function Navbar() {
   useEffect(() => setMenuOpen(false), [location])
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-bg-primary/90 backdrop-blur-xl border-b border-bg-border' : 'bg-transparent'
-      }`}
-    >
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 bg-accent-lime rounded-md flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-            <Code2 size={15} className="text-bg-primary" strokeWidth={2.5} />
-          </div>
-          <span className="font-display font-700 text-sm tracking-wide text-text-primary">
-            dev<span className="text-accent-lime">folio</span>
-          </span>
+    <header className={`studio-header ${scrolled ? 'is-scrolled' : ''}`}>
+      <nav className="studio-nav wrap">
+        <Link to="/" className="studio-brand" aria-label="RodeghieroTech — início">
+          <img src="/img/logo-henrique-r.png" alt="" />
+          <span>Rodeghiero<span className="brand-tech">Tech</span></span>
         </Link>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            Home
-          </NavLink>
-          <NavLink to="/projects" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            Projetos
-          </NavLink>
-          <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            Contato
-          </NavLink>
+        <div className="studio-nav-links">
+          <LiquidNavbar
+            items={navigationItems}
+            active={activeIndex}
+            tone="dark"
+            sound={false}
+            onChange={(_, item) => navigate(item.to)}
+          />
         </div>
-
-        {/* Right side */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/favorites"
-            className="relative w-9 h-9 rounded-lg border border-bg-border flex items-center justify-center hover:border-text-muted transition-colors group"
-          >
-            <Heart size={15} className="text-text-secondary group-hover:text-accent-lime transition-colors" />
-            {favorites.length > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-accent-lime rounded-full text-[9px] font-mono font-bold text-bg-primary flex items-center justify-center">
-                {favorites.length}
-              </span>
-            )}
-          </Link>
-          <Link to="/projects" className="btn-primary px-4 py-2 rounded-lg text-sm">
-            Ver Projetos
-          </Link>
+        <div className="studio-nav-end">
+          <Link to="/favorites" className="favorite-link" aria-label={`Favoritos (${favorites.length})`}><Heart size={15} />{favorites.length > 0 && <span>{favorites.length}</span>}</Link>
+          <Link to="/contact" className="nav-cta"><span>Vamos conversar</span><ArrowUpRight size={15} /></Link>
         </div>
-
-        {/* Mobile menu toggle */}
-        <button
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-bg-border bg-bg-secondary/70 text-text-secondary"
-          onClick={() => setMenuOpen(v => !v)}
-          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X size={16} /> : <Menu size={16} />}
-        </button>
+        <button className="menu-toggle" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button>
       </nav>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-bg-secondary/95 backdrop-blur-xl border-y border-bg-border px-4 py-3">
-          <div className="max-w-6xl mx-auto flex flex-col">
-          <NavLink to="/" end className={({ isActive }) => `rounded-lg px-3 py-3 text-sm ${isActive ? 'bg-accent-lime/10 text-accent-lime' : 'text-text-secondary'}`}>Home</NavLink>
-          <NavLink to="/projects" className={({ isActive }) => `rounded-lg px-3 py-3 text-sm ${isActive ? 'bg-accent-lime/10 text-accent-lime' : 'text-text-secondary'}`}>Projetos</NavLink>
-          <NavLink to="/contact" className={({ isActive }) => `rounded-lg px-3 py-3 text-sm ${isActive ? 'bg-accent-lime/10 text-accent-lime' : 'text-text-secondary'}`}>Contato</NavLink>
-          <NavLink to="/favorites" className={({ isActive }) => `rounded-lg px-3 py-3 text-sm ${isActive ? 'bg-accent-lime/10 text-accent-lime' : 'text-text-secondary'}`}>
-            Favoritos {favorites.length > 0 && `(${favorites.length})`}
-          </NavLink>
-          </div>
-        </div>
-      )}
+      {menuOpen && <div className="mobile-nav"><NavLink to="/" end>Início</NavLink><NavLink to="/projects">Projetos</NavLink><NavLink to="/favorites">Favoritos {favorites.length > 0 && `(${favorites.length})`}</NavLink><NavLink to="/contact">Contato</NavLink></div>}
     </header>
   )
 }
