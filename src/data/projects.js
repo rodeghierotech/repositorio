@@ -89,6 +89,22 @@ longDescription: `LinkShort é uma aplicação fullstack desenvolvida com Python
     createdAt: '2026-09-24',
   },
   {
+    id: 'corte-rapido',
+    name: 'Corte Rápido - Gestão de Barbearias',
+  description: 'Plataforma para agendar serviços, gerenciar barbearias, barbeiros, clientes e horários de atendimento.',
+
+longDescription: `Corte Rápido é uma aplicação fullstack desenvolvida com Laravel, PHP, React, TypeScript e PostgreSQL. A plataforma permite que clientes encontrem barbearias, consultem serviços e horários disponíveis e realizem agendamentos online. O sistema conta com autenticação, gerenciamento de clientes, barbeiros, serviços e estabelecimentos, além de áreas administrativas para acompanhar e organizar os atendimentos. A aplicação possui API REST versionada, validação de dados, controle de acesso e uma interface responsiva voltada à praticidade e à organização da rotina das barbearias.`,
+    techs: ['PHP', 'Laravel', 'React', 'TypeScript', 'PostgreSQL'],
+    image: '/img/corte-rapido-icon.png',
+    github: 'https://github.com/pedrov1tal/laravel-php',
+    deploy: null,
+    featured: false,
+    status: 'active',
+    stars: 2,
+    views: 89,
+    createdAt: '2026-11-25',
+  },
+  {
     id: 'catalogo-bpc',
     name: 'Catálogo de Produtos Bom Pra Cachorro',
   description: 'Catálogo digital para pet shop desenvolvido em Next.js, com importação de produtos, área admin protegida, busca inteligente, contatos via WhatsApp e identidade visual personalizada.',
