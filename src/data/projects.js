@@ -89,6 +89,22 @@ longDescription: `LinkShort é uma aplicação fullstack desenvolvida com Python
     createdAt: '2026-09-24',
   },
   {
+    id: 'pdv-lhcompany',
+    name: 'PDV - LH Company',
+  description: 'Sistema de PDV para gerenciar vendas, estoque, caixa, clientes, fiado e relatórios, com funcionamento offline.',
+
+longDescription: `PDV LH Company é uma aplicação fullstack desenvolvida com React, TypeScript, Fastify e PostgreSQL. A plataforma permite gerenciar produtos, variantes e estoque, realizar vendas com diferentes formas de pagamento, controlar abertura e fechamento de caixa, administrar clientes e vendas fiadas, além de acompanhar indicadores e relatórios operacionais. O sistema conta com autenticação por níveis de acesso, auditoria, operações idempotentes, suporte a PWA, vendas offline com sincronização segura e integração preparada com a Nuvemshop para pedidos e atualização de estoque.`,
+    techs: ['Python', 'FastAPI', 'SQLAlchemy', 'SQLite', 'Redis'],
+    image: 'https://images.unsplash.com/photo-1768145439325-eacab072f916?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+    github: 'https://github.com/rodeghierotech/pdv-lhcompany',
+    deploy: null,
+    featured: false,
+    status: 'active',
+    stars: 0,
+    views: 103,
+    createdAt: '2026-11-20',
+  },
+  {
     id: 'corte-rapido',
     name: 'Corte Rápido - Gestão de Barbearias',
   description: 'Plataforma para agendar serviços, gerenciar barbearias, barbeiros, clientes e horários de atendimento.',
