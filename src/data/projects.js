@@ -94,7 +94,7 @@ longDescription: `LinkShort é uma aplicação fullstack desenvolvida com Python
   description: 'Sistema de PDV para gerenciar vendas, estoque, caixa, clientes, fiado e relatórios, com funcionamento offline.',
 
 longDescription: `PDV LH Company é uma aplicação fullstack desenvolvida com React, TypeScript, Fastify e PostgreSQL. A plataforma permite gerenciar produtos, variantes e estoque, realizar vendas com diferentes formas de pagamento, controlar abertura e fechamento de caixa, administrar clientes e vendas fiadas, além de acompanhar indicadores e relatórios operacionais. O sistema conta com autenticação por níveis de acesso, auditoria, operações idempotentes, suporte a PWA, vendas offline com sincronização segura e integração preparada com a Nuvemshop para pedidos e atualização de estoque.`,
-    techs: ['Python', 'FastAPI', 'SQLAlchemy', 'SQLite', 'Redis'],
+   techs: ['TypeScript', 'React', 'Fastify', 'PostgreSQL', 'Vite', 'Tailwind CSS'],
     image: 'https://images.unsplash.com/photo-1768145439325-eacab072f916?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     github: 'https://github.com/rodeghierotech/pdv-lhcompany',
     deploy: null,
@@ -119,6 +119,22 @@ longDescription: `Corte Rápido é uma aplicação fullstack desenvolvida com La
     stars: 2,
     views: 89,
     createdAt: '2026-11-25',
+  },
+  {
+    id: 'controle-fiados',
+    name: 'Controle de Fiados',
+  description: 'Plataforma para controlar contas fiadas, clientes, compras, pagamentos e saldos devedores.',
+
+longDescription: `Controle de Fiados é uma aplicação web desenvolvida com Next.js, React, TypeScript, PostgreSQL e Supabase. A plataforma permite cadastrar clientes, registrar compras e pagamentos, acompanhar saldos pendentes e consultar o histórico completo de movimentações de cada conta. O sistema conta com autenticação administrativa, busca e filtragem de clientes, emissão de comprovantes, reversão segura de lançamentos e resumos financeiros. Também possui proteção de dados sensíveis e backups automáticos das contas, oferecendo uma interface responsiva e prática para organizar e acompanhar as vendas realizadas a prazo.`,
+    techs: ['Next.js', 'React', 'TypeScript', 'PostgreSQL', 'Supabase'],
+    image: 'https://plus.unsplash.com/premium_photo-1679923813998-6603ee2466c5?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+    github: 'https://github.com/pedrov1tal/laravel-php',
+    deploy: null,
+    featured: false,
+    status: 'active',
+    stars: 1,
+    views: 54,
+    createdAt: '2026-10-22',
   },
   {
     id: 'catalogo-bpc',
